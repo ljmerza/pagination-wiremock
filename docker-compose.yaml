@@ -1,13 +1,10 @@
 services:
   wiremock:
-    # image: wiremock/wiremock:latest
-    build:
-      context: .
-      dockerfile: Dockerfile
-    container_name: wiremock
+    image: wiremock/wiremock:latest
+    container_name: wiremock-server
     ports:
-      - 8080:8080
+      - "8080:8080"
     volumes:
-      - ./__files:/home/wiremock/__files
       - ./mappings:/home/wiremock/mappings
-    entrypoint: ["/docker-entrypoint.sh", "--global-response-templating", "--disable-gzip", "--verbose", "--extensions", "PaginationTransformer"]
+      - ./__files:/home/wiremock/__files
+    command: ["--verbose"]
